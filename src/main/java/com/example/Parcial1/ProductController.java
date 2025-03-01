@@ -15,19 +15,24 @@ class ProductController {
     private ProductService productService;
     @GetMapping
     public ResponseEntity<List<Product>> getProducts() {
+
         try{
             return new ResponseEntity<>(productService.getAllProducts(),HttpStatusCode.valueOf(200));
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+            return new ResponseEntity<>(HttpStatusCode.valueOf(400));
         }
         //return productService.getAllProducts();
     }
     @GetMapping("/{id}")
     public ResponseEntity<Product>getProductById(@PathVariable int id) {
-        try{
-            return new ResponseEntity<>(productService.getProductById(id),HttpStatusCode.valueOf(200));
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        if(id != 0 ){
+            try{
+                return new ResponseEntity<>(productService.getProductById(id),HttpStatusCode.valueOf(200));
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+            }}
+        else{
+            return new ResponseEntity<>(HttpStatusCode.valueOf(400));
         }
         //return productService.getProductById(id);
     }
@@ -38,7 +43,7 @@ class ProductController {
         try{
             return new ResponseEntity<>(productService.addProduct(product.getNombre(), product.getPrecio()), HttpStatusCode.valueOf(200));
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+            return new ResponseEntity<>(HttpStatusCode.valueOf(400));
         }
     }
 }

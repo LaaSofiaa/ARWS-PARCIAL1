@@ -10,10 +10,18 @@ import java.util.List;
 class ProductService {
     private List<Product> products = new ArrayList<>();
     public List<Product> getAllProducts() {
-        return products;
+        if(!products.isEmpty()){
+            return products;
+        }else{
+            return null;
+        }
     }
     public Product getProductById(int id) {
-        return products.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+        if(id != 0){
+            return products.stream().filter(p -> p.getId() == id).findFirst().orElse(null);}
+        else{
+            return null;
+        }
     }
     public Product addProduct(String nombre, double precio) {
         Product product = new Product(nombre, precio);
